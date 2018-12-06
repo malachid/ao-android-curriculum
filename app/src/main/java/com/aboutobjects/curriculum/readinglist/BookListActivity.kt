@@ -3,12 +3,11 @@ package com.aboutobjects.curriculum.readinglist
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
+import androidx.databinding.DataBindingUtil
+import com.aboutobjects.curriculum.readinglist.databinding.ActivityBookListBinding
 import com.aboutobjects.curriculum.readinglist.model.ReadingList
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import java.io.File
 import java.io.FileWriter
 import java.io.InputStreamReader
@@ -27,6 +26,7 @@ class BookListActivity : AppCompatActivity() {
     }
 
     private val app: ReadingListApp by lazy { application as ReadingListApp }
+    private lateinit var binding: ActivityBookListBinding
 
     private fun loadJson(): ReadingList? {
         return try{
@@ -57,10 +57,10 @@ class BookListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_book_list)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_book_list)
 
         loadJson()?.let {
-            findViewById<TextView>(R.id.hello_text).text = getBooksLoadedMessage(it.books.size)
+            binding.helloText.text = getBooksLoadedMessage(it.books.size)
             try{
                 val writer = FileWriter(File(filesDir, JSON_FILE))
                 app.gson.toJson(it, writer)
@@ -73,7 +73,7 @@ class BookListActivity : AppCompatActivity() {
 
         prefs.getString(KEY_TIMESTAMP, null)?.let {
             val time = timestampFormat.parse(it)
-            findViewById<TextView>(R.id.login_text).text = resources.getString(R.string.last_login, displayFormat.format(time))
+            binding.loginText.text = resources.getString(R.string.last_login, displayFormat.format(time))
         }
 
         prefs.edit {
