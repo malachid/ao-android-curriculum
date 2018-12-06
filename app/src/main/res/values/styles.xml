@@ -8,4 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MyTitle">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="LightTitle" parent="MyTitle">
+        <item name="android:textColor">@color/cornsilk</item>
+    </style>
 </resources>

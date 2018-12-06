@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ReadingList</string>
+    <string name="hello">Hello, Earth!</string>
 </resources>

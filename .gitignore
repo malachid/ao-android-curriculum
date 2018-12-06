@@ -25,7 +25,6 @@ hs_err_pid*
 .idea/
 *.iml
 *.iws
-target/
 local.properties
 .gradle/
 
