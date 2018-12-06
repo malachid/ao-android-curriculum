@@ -10,4 +10,5 @@
     <string name="book_title_label">Title</string>
     <string name="book_author_label">Author</string>
     <string name="book_year_label">Year</string>
+    <string name="save">Save</string>
 </resources>
