@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">ReadingList</string>
     <string name="hello">Hello, Earth!</string>
+    <string name="last_login">Your last login was: %1$s</string>
 </resources>

@@ -16,4 +16,9 @@
     <style name="LightTitle" parent="MyTitle">
         <item name="android:textColor">@color/cornsilk</item>
     </style>
+
+    <style name="LightInfo">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/cornsilk</item>
+    </style>
 </resources>
