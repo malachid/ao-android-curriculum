@@ -1,0 +1,149 @@
+{
+  "title" : "My Summer Reading",
+  "books" : [
+    {
+      "title" : "For Whom the Bell Tolls",
+      "author" : {
+        "firstName" : "Ernest",
+        "lastName" : "Hemingway"
+      },
+      "year" : "1951"
+    },
+    {
+      "title" : "War of the Worlds",
+      "author" : {
+        "firstName" : "H. G.",
+        "lastName" : "Wells"
+      },
+      "year" : "1898"
+    },
+    {
+      "title" : "The Time Machine",
+      "author" : {
+        "firstName" : "H. G.",
+        "lastName" : "Wells"
+      },
+      "year" : "1897"
+    },
+    {
+      "title" : "Alice in Wonderland",
+      "author" : {
+        "firstName" : "Lewis",
+        "lastName" : "Carroll"
+      },
+      "year" : "1865"
+    },
+    {
+      "title" : "Nature",
+      "author" : {
+        "firstName" : "Ralph Waldo",
+        "lastName" : "Emerson"
+      },
+      "year" : "1836"
+    },
+    {
+      "title" : "Macbeth",
+      "author" : {
+        "firstName" : "William",
+        "lastName" : "Shakespeare"
+      },
+      "year" : "1603"
+    },
+    {
+      "title" : "Winnie The Pooh",
+      "author" : {
+        "firstName" : "A. A.",
+        "lastName" : "Milne"
+      },
+      "year" : "1926"
+    },
+    {
+      "title" : "Adventures Of Huckleberry Finn",
+      "author" : {
+        "firstName" : "Mark",
+        "lastName" : "Twain"
+      },
+      "year" : "1884"
+    },
+    {
+      "title" : "War And Peace",
+      "author" : {
+        "firstName" : "Leo",
+        "lastName" : "Tolstoy"
+      },
+      "year" : "1869"
+    },
+    {
+      "title" : "Sense And Sensibility",
+      "author" : {
+        "firstName" : "Jane",
+        "lastName" : "Austen"
+      },
+      "year" : "1811"
+    },
+    {
+      "title" : "Emma",
+      "author" : {
+        "firstName" : "Jane",
+        "lastName" : "Austen"
+      },
+      "year" : "1816"
+    },
+    {
+      "title" : "The Brothers Karamozov",
+      "author" : {
+        "firstName" : "Fyodor",
+        "lastName" : "Dostoevsky"
+      },
+      "year" : "1880"
+    },
+    {
+      "title" : "Principia",
+      "author" : {
+        "firstName" : "Sir Isaac",
+        "lastName" : "Newton"
+      },
+      "year" : "1687"
+    },
+    {
+      "title" : "Leaves of Grass",
+      "year" : "1855",
+      "author" : {
+        "firstName" : "Walt",
+        "lastName" : "Whitman"
+      }
+    },
+    {
+      "title" : "Utopia",
+      "year" : "1516",
+      "author" : {
+        "firstName" : "Sir Thomas",
+        "lastName" : "More"
+      }
+    },
+    {
+      "title" : "Novum Organum",
+      "year" : "1620",
+      "author" : {
+        "firstName" : "Sir Francis",
+        "lastName" : "Bacon"
+      }
+    },
+    {
+      "title" : "Henry V",
+      "year" : "1599",
+      "author" : {
+        "firstName" : "William",
+        "lastName" : "Shakespeare"
+      }
+    },
+    {
+      "title" : "The Mill on the Floss",
+      "year" : "1860",
+      "author" : {
+        "firstName" : "George",
+        "lastName" : "Eliot"
+      }
+    }
+  ]
+}
