@@ -13,6 +13,10 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField "int", "SAMPLE_NUMBER", '123'
+        buildConfigField "boolean", "SAMPLE_BOOLEAN", 'true'
+        buildConfigField "String", "SAMPLE_STRING", '"This is a string"'
+        buildConfigField "String", "SAMPLE_VARIABLE", "\"${rootProject.ext.sampleVariable}\""
     }
     buildTypes {
         release {

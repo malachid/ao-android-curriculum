@@ -15,6 +15,10 @@ buildscript {
     }
 }
 
+project.ext {
+    sampleVariable = "This is a sample variable"
+}
+
 allprojects {
     repositories {
         google()
