@@ -22,7 +22,14 @@ class BookListActivity : AppCompatActivity() {
 
     private val app: ReadingListApp by lazy { application as ReadingListApp }
     private lateinit var binding: ActivityBookListBinding
-    private val viewAdapter = ReadingListAdapter()
+    private val viewAdapter = ReadingListAdapter(
+        bookClicked = {
+            startActivity(EditBookActivity.getIntent(
+                context = this,
+                book = it
+            ))
+        }
+    )
     private lateinit var viewManager: RecyclerView.LayoutManager
 
     private fun loadJson(): ReadingList? {

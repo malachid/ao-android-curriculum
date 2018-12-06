@@ -7,11 +7,18 @@
         <variable
             name="book"
             type="com.aboutobjects.curriculum.readinglist.model.Book" />
+
+        <variable
+            name="listener"
+            type="com.aboutobjects.curriculum.readinglist.ui.BookClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:clickable="true"
+        android:onClick="@{() -> listener.onBookClicked(book)}">
 
         <TextView
             android:id="@+id/title"

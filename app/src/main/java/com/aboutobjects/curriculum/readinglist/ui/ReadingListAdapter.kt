@@ -1,14 +1,18 @@
 package com.aboutobjects.curriculum.readinglist.ui
 
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.aboutobjects.curriculum.readinglist.R
 import com.aboutobjects.curriculum.readinglist.databinding.ItemBookBinding
 import com.aboutobjects.curriculum.readinglist.databinding.ItemTitleBinding
+import com.aboutobjects.curriculum.readinglist.model.Book
 import com.aboutobjects.curriculum.readinglist.model.ReadingList
 
-class ReadingListAdapter : RecyclerView.Adapter<DataboundViewHolder<ViewDataBinding>>() {
+class ReadingListAdapter(
+    val bookClicked: (Book) -> Unit
+) : RecyclerView.Adapter<DataboundViewHolder<ViewDataBinding>>() {
 
     var readingList: ReadingList? = null
         set(value) {
@@ -99,7 +103,10 @@ class ReadingListAdapter : RecyclerView.Adapter<DataboundViewHolder<ViewDataBind
         readingList?.let {
             when(holder.binding) {
                 is ItemTitleBinding -> holder.binding.readinglist = it
-                is ItemBookBinding -> holder.binding.book = it.books[position - 1]
+                is ItemBookBinding -> {
+                    holder.binding.book = it.books[position - 1]
+                    holder.binding.listener = BookClickListener(bookClicked)
+                }
                 else -> {
                     // @TODO add logging
                 }
