@@ -1,32 +1,29 @@
 package com.aboutobjects.curriculum.readinglist
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.edit
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.aboutobjects.curriculum.readinglist.databinding.ActivityBookListBinding
 import com.aboutobjects.curriculum.readinglist.model.ReadingList
+import com.aboutobjects.curriculum.readinglist.ui.ReadingListAdapter
 import java.io.File
 import java.io.FileWriter
 import java.io.InputStreamReader
-import java.text.SimpleDateFormat
-import java.util.*
 
 class BookListActivity : AppCompatActivity() {
     companion object {
-        // from https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html
-        const val timestampPattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
-        const val displayPattern = "yyyy.MM.dd 'at' HH:mm:ss z"
-
-        val KEY_TIMESTAMP = "${BookListActivity::class.java.name}::timestamp"
         const val JSON_FILE = "BooksAndAuthors.json"
         const val PREF_FILE = "samplePrefs"
     }
 
     private val app: ReadingListApp by lazy { application as ReadingListApp }
     private lateinit var binding: ActivityBookListBinding
+    private val viewAdapter = ReadingListAdapter()
+    private lateinit var viewManager: RecyclerView.LayoutManager
 
     private fun loadJson(): ReadingList? {
         return try{
@@ -38,46 +35,32 @@ class BookListActivity : AppCompatActivity() {
         }
     }
 
-    private val timestampFormat: SimpleDateFormat by lazy {
-        // Don't set Locale.getDefault() in companion because user may change it at runtime
-        SimpleDateFormat(timestampPattern, Locale.getDefault())
-    }
-
-    private val displayFormat: SimpleDateFormat by lazy {
-        SimpleDateFormat(displayPattern, Locale.getDefault())
-    }
-
-    private fun timestamp(): String {
-        return timestampFormat.format(Calendar.getInstance().time)
-    }
-
-    private val prefs: SharedPreferences by lazy {
-        getSharedPreferences(PREF_FILE, Context.MODE_PRIVATE)
+    private fun saveJson(readingList: ReadingList) {
+        try{
+            val writer = FileWriter(File(filesDir, JSON_FILE))
+            app.gson.toJson(readingList, writer)
+            writer.flush()
+            writer.close()
+        }catch(e: Exception){
+            // @TODO introduce logging
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_book_list)
 
+        viewManager = LinearLayoutManager(this)
+        binding.recycler.apply {
+            setHasFixedSize(true)
+            layoutManager = viewManager
+            addItemDecoration(DividerItemDecoration(this@BookListActivity, DividerItemDecoration.VERTICAL))
+            adapter = viewAdapter
+        }
+
         loadJson()?.let {
-            binding.helloText.text = getBooksLoadedMessage(it.books.size)
-            try{
-                val writer = FileWriter(File(filesDir, JSON_FILE))
-                app.gson.toJson(it, writer)
-                writer.flush()
-                writer.close()
-            }catch(e: Exception){
-                // @TODO introduce logging
-            }
-        }
-
-        prefs.getString(KEY_TIMESTAMP, null)?.let {
-            val time = timestampFormat.parse(it)
-            binding.loginText.text = resources.getString(R.string.last_login, displayFormat.format(time))
-        }
-
-        prefs.edit {
-            putString(KEY_TIMESTAMP, timestamp())
+            viewAdapter.readingList = it
+            saveJson(it)
         }
     }
 }
