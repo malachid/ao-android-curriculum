@@ -23,18 +23,15 @@ class BookListActivity : AppCompatActivity() {
 
         val KEY_TIMESTAMP = "${BookListActivity::class.java.name}::timestamp"
         const val JSON_FILE = "BooksAndAuthors.json"
+        const val PREF_FILE = "samplePrefs"
     }
 
-    private val gson: Gson by lazy {
-        GsonBuilder()
-            .setPrettyPrinting()
-            .create()
-    }
+    private val app: ReadingListApp by lazy { application as ReadingListApp }
 
     private fun loadJson(): ReadingList? {
         return try{
             val reader = InputStreamReader(assets.open(JSON_FILE))
-            gson.fromJson(reader, ReadingList::class.java)
+            app.gson.fromJson(reader, ReadingList::class.java)
         } catch (e: Exception) {
             // @TODO introduce logging
             null
@@ -55,7 +52,7 @@ class BookListActivity : AppCompatActivity() {
     }
 
     private val prefs: SharedPreferences by lazy {
-        getSharedPreferences("samplePrefs", Context.MODE_PRIVATE)
+        getSharedPreferences(PREF_FILE, Context.MODE_PRIVATE)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,10 +60,10 @@ class BookListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_book_list)
 
         loadJson()?.let {
-            findViewById<TextView>(R.id.hello_text).text = resources.getString(R.string.hello_text, it.books.size)
+            findViewById<TextView>(R.id.hello_text).text = getBooksLoadedMessage(it.books.size)
             try{
                 val writer = FileWriter(File(filesDir, JSON_FILE))
-                gson.toJson(it, writer)
+                app.gson.toJson(it, writer)
                 writer.flush()
                 writer.close()
             }catch(e: Exception){
@@ -82,5 +79,13 @@ class BookListActivity : AppCompatActivity() {
         prefs.edit {
             putString(KEY_TIMESTAMP, timestamp())
         }
+    }
+}
+
+fun Context.getBooksLoadedMessage(numberOfBooks: Int): String {
+    return when(numberOfBooks) {
+        0 -> getString(R.string.loaded_none)
+        1 -> getString(R.string.loaded_one)
+        else -> getString(R.string.loaded_some, numberOfBooks)
     }
 }

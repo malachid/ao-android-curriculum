@@ -1,12 +1,9 @@
 package com.aboutobjects.curriculum.readinglist
 
-import androidx.test.InstrumentationRegistry
-import androidx.test.runner.AndroidJUnit4
-
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
-
-import org.junit.Assert.*
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -18,7 +15,7 @@ class ExampleInstrumentedTest {
     @Test
     fun useAppContext() {
         // Context of the app under test.
-        val appContext = InstrumentationRegistry.getTargetContext()
+        val appContext = androidx.test.core.app.ApplicationProvider.getApplicationContext<ReadingListApp>()
         assertEquals("com.aboutobjects.curriculum.readinglist", appContext.packageName)
     }
 }
