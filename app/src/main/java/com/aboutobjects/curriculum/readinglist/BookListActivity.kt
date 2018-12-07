@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aboutobjects.curriculum.readinglist.databinding.ActivityBookListBinding
 import com.aboutobjects.curriculum.readinglist.model.Book
 import com.aboutobjects.curriculum.readinglist.model.ReadingList
+import com.aboutobjects.curriculum.readinglist.ui.CustomDivider
 import com.aboutobjects.curriculum.readinglist.ui.ReadingListAdapter
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.Completable
@@ -94,7 +95,7 @@ class BookListActivity : AppCompatActivity() {
         binding.recycler.apply {
             setHasFixedSize(true)
             layoutManager = viewManager
-            addItemDecoration(DividerItemDecoration(this@BookListActivity, DividerItemDecoration.VERTICAL))
+            addItemDecoration(CustomDivider(context = this@BookListActivity))
             adapter = viewAdapter
         }
 

@@ -5,5 +5,7 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="cornsilk">#fff8dc</color>
-
+    <color name="cornflower">#6495ed</color>
+    <color name="lightGray">#d3d3d3</color>
+    <color name="hanBlue">#446ccf</color>
 </resources>
