@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -43,7 +44,7 @@ class BookListActivity : AppCompatActivity() {
             val reader = InputStreamReader(assets.open(JSON_FILE))
             app.gson.fromJson(reader, ReadingList::class.java)
         } catch (e: Exception) {
-            // @TODO introduce logging
+            Log.d(ReadingListApp.TAG, "Failed to load Json from assets/$JSON_FILE", e)
             null
         }
     }
@@ -53,7 +54,7 @@ class BookListActivity : AppCompatActivity() {
             val reader = FileReader(File(filesDir, JSON_FILE))
             app.gson.fromJson(reader, ReadingList::class.java)
         } catch (e: Exception) {
-            // @TODO introduce logging
+            Log.d(ReadingListApp.TAG, "Failed to load Json from files/$JSON_FILE", e)
             null
         }
     }
@@ -69,7 +70,7 @@ class BookListActivity : AppCompatActivity() {
             writer.flush()
             writer.close()
         }catch(e: Exception){
-            // @TODO introduce logging
+            Log.d(ReadingListApp.TAG, "Failed to save Json to files/$JSON_FILE", e)
         }
     }
 
@@ -92,6 +93,7 @@ class BookListActivity : AppCompatActivity() {
         }
 
         loadJson()?.let {
+            Log.i(ReadingListApp.TAG, "${it.books.size} books loaded")
             viewAdapter.readingList = it
             saveJson(it)
         }

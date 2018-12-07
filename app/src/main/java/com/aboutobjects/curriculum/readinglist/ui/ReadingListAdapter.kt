@@ -1,10 +1,12 @@
 package com.aboutobjects.curriculum.readinglist.ui
 
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.aboutobjects.curriculum.readinglist.R
+import com.aboutobjects.curriculum.readinglist.ReadingListApp
 import com.aboutobjects.curriculum.readinglist.databinding.ItemBookBinding
 import com.aboutobjects.curriculum.readinglist.databinding.ItemTitleBinding
 import com.aboutobjects.curriculum.readinglist.model.Book
@@ -108,7 +110,7 @@ class ReadingListAdapter(
                     holder.binding.listener = BookClickListener(bookClicked)
                 }
                 else -> {
-                    // @TODO add logging
+                    Log.w(ReadingListApp.TAG, "Trying to bind to unknown type: ${holder.binding}")
                 }
             }
         } // else... what do we do?
