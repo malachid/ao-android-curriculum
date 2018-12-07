@@ -14,6 +14,13 @@ import com.aboutobjects.curriculum.readinglist.databinding.ActivityBookListBindi
 import com.aboutobjects.curriculum.readinglist.model.Book
 import com.aboutobjects.curriculum.readinglist.model.ReadingList
 import com.aboutobjects.curriculum.readinglist.ui.ReadingListAdapter
+import com.google.android.material.snackbar.Snackbar
+import io.reactivex.Completable
+import io.reactivex.Maybe
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
@@ -29,6 +36,8 @@ class BookListActivity : AppCompatActivity() {
 
     private val app: ReadingListApp by lazy { application as ReadingListApp }
     private lateinit var binding: ActivityBookListBinding
+    private var loadJsonDisposable: Disposable? = null
+
     private val viewAdapter = ReadingListAdapter(
         bookClicked = {
             startActivityForResult(EditBookActivity.getIntent(
@@ -39,38 +48,41 @@ class BookListActivity : AppCompatActivity() {
     )
     private lateinit var viewManager: RecyclerView.LayoutManager
 
-    private fun loadJsonFromAssets(): ReadingList? {
+    private fun loadJsonFromAssets(): Maybe<ReadingList> {
         return try{
             val reader = InputStreamReader(assets.open(JSON_FILE))
-            app.gson.fromJson(reader, ReadingList::class.java)
+            Maybe.just(app.gson.fromJson(reader, ReadingList::class.java))
         } catch (e: Exception) {
-            Log.d(ReadingListApp.TAG, "Failed to load Json from assets/$JSON_FILE", e)
-            null
+            Log.d(ReadingListApp.TAG, "Failed to load Json from assets/$JSON_FILE",e)
+            Maybe.empty<ReadingList>()
         }
     }
 
-    private fun loadJsonFromFiles(): ReadingList? {
+    private fun loadJsonFromFiles(): Maybe<ReadingList> {
         return try {
             val reader = FileReader(File(filesDir, JSON_FILE))
-            app.gson.fromJson(reader, ReadingList::class.java)
+            Maybe.just(app.gson.fromJson(reader, ReadingList::class.java))
         } catch (e: Exception) {
-            Log.d(ReadingListApp.TAG, "Failed to load Json from files/$JSON_FILE", e)
-            null
+            Log.d(ReadingListApp.TAG, "Failed to load Json from files/$JSON_FILE",e)
+            Maybe.empty<ReadingList>()
         }
     }
 
-    private fun loadJson(): ReadingList? {
-        return loadJsonFromFiles() ?: loadJsonFromAssets()
+    private fun loadJson(): Maybe<ReadingList> {
+        return loadJsonFromFiles()
+            .switchIfEmpty(loadJsonFromAssets())
     }
 
-    private fun saveJson(readingList: ReadingList) {
-        try{
+    private fun saveJson(readingList: ReadingList): Completable {
+        return try{
             val writer = FileWriter(File(filesDir, JSON_FILE))
             app.gson.toJson(readingList, writer)
             writer.flush()
             writer.close()
+            Completable.complete()
         }catch(e: Exception){
-            Log.d(ReadingListApp.TAG, "Failed to save Json to files/$JSON_FILE", e)
+            Log.d(ReadingListApp.TAG, "Failed to save Json to files/$JSON_FILE",e)
+            Completable.error(e)
         }
     }
 
@@ -92,11 +104,34 @@ class BookListActivity : AppCompatActivity() {
             ), NEW_REQUEST_CODE)
         }
 
-        loadJson()?.let {
-            Log.i(ReadingListApp.TAG, "${it.books.size} books loaded")
-            viewAdapter.readingList = it
-            saveJson(it)
-        }
+        loadJsonDisposable = loadJson()
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onSuccess = {
+                    Log.i(ReadingListApp.TAG, "${it.books.size} books loaded")
+                    viewAdapter.readingList = it
+                    saveJson(it)
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe()
+                },
+                onError = {
+                    Log.e(ReadingListApp.TAG, "Error loading books: ${it.message}", it)
+                    it.message?.let {
+                        Snackbar.make(binding.recycler, it, Snackbar.LENGTH_LONG)
+                            .show()
+                    }
+                },
+                onComplete = {
+                    Log.w(ReadingListApp.TAG, "Unable to load any books")
+                }
+            )
+    }
+
+    override fun onDestroy() {
+        loadJsonDisposable?.dispose()
+        super.onDestroy()
     }
 
     private fun getBook(data: Intent?, key: String): Book? {
@@ -133,8 +168,20 @@ class BookListActivity : AppCompatActivity() {
                         )
                         // Save the results
                         saveJson(newReadingList)
-                        // And update our view
-                        viewAdapter.readingList = newReadingList
+                            .subscribeOn(Schedulers.newThread())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribeBy(
+                                onComplete = {
+                                    // And update our view
+                                    viewAdapter.readingList = newReadingList
+                                },
+                                onError = {
+                                    it.message?.let {
+                                        Snackbar.make(binding.recycler, it, Snackbar.LENGTH_LONG)
+                                            .show()
+                                    }
+                                }
+                            )
                     }
                 }
             }
