@@ -11,13 +11,20 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity android:name=".BookListActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity android:name=".EditBookActivity" />
+        <activity android:name=".BookListV2Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".EditBookActivity" />
     </application>
 
 </manifest>
