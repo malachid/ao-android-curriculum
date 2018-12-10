@@ -1,5 +1,7 @@
 package com.aboutobjects.curriculum.readinglist.ui
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.content.Context
 import android.os.Bundle
 import android.view.*
@@ -85,6 +87,10 @@ class EditBookFragment: Fragment() {
         } ?: let {
             binding.book = EditableBook()
         }
+        binding.pleaseWait.apply {
+            visibility = View.GONE
+            alpha = 0f
+        }
         return binding.root
     }
 
@@ -149,9 +155,17 @@ class EditBookFragment: Fragment() {
             R.id.action_save -> {
                 binding.book?.let { editableBook ->
                     bookListService?.let { service ->
+                        binding.pleaseWait.apply {
+                            visibility = View.VISIBLE
+                            animate()
+                                .alpha(1f)
+                                .setDuration(3000)
+                                .setListener(null)
+                        }
                         service.edit(
                             source = editableBook.source,
-                            edited = editableBook.edited() )
+                            edited = editableBook.edited()
+                        )
                             .subscribeOn(Schedulers.newThread())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribeBy(
@@ -161,8 +175,16 @@ class EditBookFragment: Fragment() {
                                 },
                                 onError = { t ->
                                     t.message?.let { msg ->
-                                        Snackbar.make(binding.root, msg, Snackbar.LENGTH_LONG)
-                                            .show()
+                                        binding.pleaseWait.animate()
+                                            .alpha(0f)
+                                            .setDuration(1000)
+                                            .setListener(object: AnimatorListenerAdapter() {
+                                                override fun onAnimationEnd(animation: Animator?) {
+                                                    binding.pleaseWait.visibility = View.GONE
+                                                    Snackbar.make(binding.root, msg, Snackbar.LENGTH_LONG)
+                                                        .show()
+                                                }
+                                            })
                                     }
                                 }
                             )

@@ -32,11 +32,16 @@ class BookListFragment: Fragment() {
             app?.let { readingListApp ->
                 fragManager?.let {
                     it.beginTransaction()
-                    .replace(R.id.container, EditBookFragment.newInstance(
-                        app = readingListApp,
-                        source= book))
-                    .addToBackStack(null)
-                    .commit()
+                        .setCustomAnimations(
+                            R.animator.card_flip_right_in,
+                            R.animator.card_flip_right_out,
+                            R.animator.card_flip_left_in,
+                            R.animator.card_flip_left_out)
+                        .replace(R.id.container, EditBookFragment.newInstance(
+                            app = readingListApp,
+                            source= book))
+                        .addToBackStack(null)
+                        .commit()
                 }
             }
         }
@@ -101,9 +106,14 @@ class BookListFragment: Fragment() {
             app?.let { readingListApp ->
                 fragManager?.let {
                     it.beginTransaction()
-                    .replace(R.id.container, EditBookFragment.newInstance(app = readingListApp))
-                    .addToBackStack(null)
-                    .commit()
+                        .setCustomAnimations(
+                            R.animator.card_flip_right_in,
+                            R.animator.card_flip_right_out,
+                            R.animator.card_flip_left_in,
+                            R.animator.card_flip_left_out)
+                        .replace(R.id.container, EditBookFragment.newInstance(app = readingListApp))
+                        .addToBackStack(null)
+                        .commit()
                 }
             }
         }
