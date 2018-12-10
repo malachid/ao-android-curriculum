@@ -1,149 +1,186 @@
 {
-  "title" : "My Summer Reading",
-  "books" : [
-    {
-      "title" : "For Whom the Bell Tolls",
-      "author" : {
-        "firstName" : "Ernest",
-        "lastName" : "Hemingway"
+   "books" : [
+      {
+         "id" : 0,
+         "title" : "For Whom the Bell Tolls",
+         "author" : {
+            "id" : 0,
+            "lastName" : "Hemingway",
+            "firstName" : "Ernest"
+         },
+         "year" : "1951"
       },
-      "year" : "1951"
-    },
-    {
-      "title" : "War of the Worlds",
-      "author" : {
-        "firstName" : "H. G.",
-        "lastName" : "Wells"
+      {
+         "year" : "1898",
+         "author" : {
+            "firstName" : "H. G.",
+            "lastName" : "Wells",
+            "id" : 1
+         },
+         "title" : "War of the Worlds",
+         "id" : 1
       },
-      "year" : "1898"
-    },
-    {
-      "title" : "The Time Machine",
-      "author" : {
-        "firstName" : "H. G.",
-        "lastName" : "Wells"
+      {
+         "id" : 2,
+         "title" : "The Time Machine",
+         "author" : {
+            "id" : 1,
+            "lastName" : "Wells",
+            "firstName" : "H. G."
+         },
+         "year" : "1897"
       },
-      "year" : "1897"
-    },
-    {
-      "title" : "Alice in Wonderland",
-      "author" : {
-        "firstName" : "Lewis",
-        "lastName" : "Carroll"
+      {
+         "year" : "1865",
+         "title" : "Alice in Wonderland",
+         "author" : {
+            "firstName" : "Lewis",
+            "lastName" : "Carroll",
+            "id" : 2
+         },
+         "id" : 3
       },
-      "year" : "1865"
-    },
-    {
-      "title" : "Nature",
-      "author" : {
-        "firstName" : "Ralph Waldo",
-        "lastName" : "Emerson"
+      {
+         "id" : 4,
+         "author" : {
+            "id" : 3,
+            "lastName" : "Emerson",
+            "firstName" : "Ralph Waldo"
+         },
+         "title" : "Nature",
+         "year" : "1836"
       },
-      "year" : "1836"
-    },
-    {
-      "title" : "Macbeth",
-      "author" : {
-        "firstName" : "William",
-        "lastName" : "Shakespeare"
+      {
+         "year" : "1603",
+         "id" : 5,
+         "author" : {
+            "lastName" : "Shakespeare",
+            "id" : 4,
+            "firstName" : "William"
+         },
+         "title" : "Macbeth"
       },
-      "year" : "1603"
-    },
-    {
-      "title" : "Winnie The Pooh",
-      "author" : {
-        "firstName" : "A. A.",
-        "lastName" : "Milne"
+      {
+         "year" : "1926",
+         "author" : {
+            "firstName" : "A. A.",
+            "lastName" : "Milne",
+            "id" : 5
+         },
+         "title" : "Winnie The Pooh",
+         "id" : 6
       },
-      "year" : "1926"
-    },
-    {
-      "title" : "Adventures Of Huckleberry Finn",
-      "author" : {
-        "firstName" : "Mark",
-        "lastName" : "Twain"
+      {
+         "author" : {
+            "firstName" : "Mark",
+            "lastName" : "Twain",
+            "id" : 6
+         },
+         "title" : "Adventures Of Huckleberry Finn",
+         "id" : 7,
+         "year" : "1884"
       },
-      "year" : "1884"
-    },
-    {
-      "title" : "War And Peace",
-      "author" : {
-        "firstName" : "Leo",
-        "lastName" : "Tolstoy"
+      {
+         "title" : "War And Peace",
+         "author" : {
+            "lastName" : "Tolstoy",
+            "id" : 7,
+            "firstName" : "Leo"
+         },
+         "id" : 8,
+         "year" : "1869"
       },
-      "year" : "1869"
-    },
-    {
-      "title" : "Sense And Sensibility",
-      "author" : {
-        "firstName" : "Jane",
-        "lastName" : "Austen"
+      {
+         "title" : "Sense And Sensibility",
+         "author" : {
+            "lastName" : "Austen",
+            "id" : 8,
+            "firstName" : "Jane"
+         },
+         "id" : 9,
+         "year" : "1811"
       },
-      "year" : "1811"
-    },
-    {
-      "title" : "Emma",
-      "author" : {
-        "firstName" : "Jane",
-        "lastName" : "Austen"
+      {
+         "year" : "1816",
+         "author" : {
+            "firstName" : "Jane",
+            "lastName" : "Austen",
+            "id" : 8
+         },
+         "title" : "Emma",
+         "id" : 10
       },
-      "year" : "1816"
-    },
-    {
-      "title" : "The Brothers Karamozov",
-      "author" : {
-        "firstName" : "Fyodor",
-        "lastName" : "Dostoevsky"
+      {
+         "year" : "1880",
+         "title" : "The Brothers Karamozov",
+         "author" : {
+            "firstName" : "Fyodor",
+            "id" : 9,
+            "lastName" : "Dostoevsky"
+         },
+         "id" : 11
       },
-      "year" : "1880"
-    },
-    {
-      "title" : "Principia",
-      "author" : {
-        "firstName" : "Sir Isaac",
-        "lastName" : "Newton"
+      {
+         "id" : 12,
+         "author" : {
+            "firstName" : "Sir Isaac",
+            "lastName" : "Newton",
+            "id" : 10
+         },
+         "title" : "Principia",
+         "year" : "1687"
       },
-      "year" : "1687"
-    },
-    {
-      "title" : "Leaves of Grass",
-      "year" : "1855",
-      "author" : {
-        "firstName" : "Walt",
-        "lastName" : "Whitman"
+      {
+         "year" : "1855",
+         "title" : "Leaves of Grass",
+         "author" : {
+            "id" : 11,
+            "lastName" : "Whitman",
+            "firstName" : "Walt"
+         },
+         "id" : 13
+      },
+      {
+         "year" : "1516",
+         "id" : 14,
+         "author" : {
+            "lastName" : "More",
+            "id" : 12,
+            "firstName" : "Sir Thomas"
+         },
+         "title" : "Utopia"
+      },
+      {
+         "title" : "Novum Organum",
+         "author" : {
+            "id" : 13,
+            "lastName" : "Bacon",
+            "firstName" : "Sir Francis"
+         },
+         "id" : 15,
+         "year" : "1620"
+      },
+      {
+         "year" : "1599",
+         "id" : 16,
+         "title" : "Henry V",
+         "author" : {
+            "firstName" : "William",
+            "lastName" : "Shakespeare",
+            "id" : 4
+         }
+      },
+      {
+         "year" : "1860",
+         "id" : 17,
+         "author" : {
+            "lastName" : "Eliot",
+            "id" : 14,
+            "firstName" : "George"
+         },
+         "title" : "The Mill on the Floss"
       }
-    },
-    {
-      "title" : "Utopia",
-      "year" : "1516",
-      "author" : {
-        "firstName" : "Sir Thomas",
-        "lastName" : "More"
-      }
-    },
-    {
-      "title" : "Novum Organum",
-      "year" : "1620",
-      "author" : {
-        "firstName" : "Sir Francis",
-        "lastName" : "Bacon"
-      }
-    },
-    {
-      "title" : "Henry V",
-      "year" : "1599",
-      "author" : {
-        "firstName" : "William",
-        "lastName" : "Shakespeare"
-      }
-    },
-    {
-      "title" : "The Mill on the Floss",
-      "year" : "1860",
-      "author" : {
-        "firstName" : "George",
-        "lastName" : "Eliot"
-      }
-    }
-  ]
+   ],
+   "title" : "My Summer Reading",
+   "id" : 0
 }

@@ -7,6 +7,7 @@ import com.aboutobjects.curriculum.readinglist.model.ReadingList
 import io.reactivex.Completable
 import io.reactivex.Completable.complete
 import io.reactivex.Maybe
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -24,7 +25,8 @@ class BookListService(val app: ReadingListApp) {
     val readingList: BehaviorSubject<ReadingList> = BehaviorSubject.create()
 
     init {
-        val loadDisposable = loadFromFiles()
+        val loadDisposable = loadFromServer()
+            .switchIfEmpty(loadFromFiles())
             .switchIfEmpty(loadFromAssets())
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
@@ -33,6 +35,12 @@ class BookListService(val app: ReadingListApp) {
                 onError = { Log.w(ReadingListApp.TAG, "Error loading books", it) },
                 onComplete = { Log.w(ReadingListApp.TAG, "No books found") }
             )
+    }
+    private fun loadFromServer(): Maybe<ReadingList> {
+        return app.curriculumService
+            .getReadingList(id = 0)
+            .toMaybe()
+            .onErrorComplete()
     }
 
     private fun loadFromAssets(): Maybe<ReadingList> {
@@ -69,22 +77,20 @@ class BookListService(val app: ReadingListApp) {
         }
     }
 
-    fun edit(source: Book?, edited: Book): Completable {
-        return readingList.value?.let { oldReadingList ->
-            // Create a new ReadingList
-            val newReadingList = ReadingList(
-                title = oldReadingList.title,
-                books = oldReadingList.books
-                    .toMutableList()
-                    .filterNot {
-                        it.title == source?.title
-                                && it.author == source?.author
-                                && it.year == source?.year
-                    }.plus(edited)
-                    .toList()
-            )
-            // Save the results
-            save(newReadingList)
-        } ?: error(IllegalArgumentException("Reading List not found"))
+    fun edit(source: Book?, edited: Book): Single<Book> {
+        return when (source) {
+            null -> app.curriculumService.createBook(source = edited)
+            else -> app.curriculumService.updateBook(source = source, edited = edited)
+        }.flatMap { book ->
+            app.curriculumService
+                .addBookToReadingList(
+                    readingList = readingList.value ?: throw IllegalArgumentException("Reading List not loaded"),
+                    book = book
+                )
+                .map { it -> Pair(it, book) }
+                .doOnSuccess { (readingList, _) -> save(readingList) }
+        }.map { (_, book) ->
+            book
+        }
     }
 }

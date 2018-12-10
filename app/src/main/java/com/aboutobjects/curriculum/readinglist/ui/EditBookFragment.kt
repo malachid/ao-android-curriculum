@@ -169,7 +169,7 @@ class EditBookFragment: Fragment() {
                             .subscribeOn(Schedulers.newThread())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribeBy(
-                                onComplete = {
+                                onSuccess = {
                                     // It's updated, so we are done
                                     activity?.supportFragmentManager?.popBackStack()
                                 },

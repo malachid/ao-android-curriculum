@@ -17,6 +17,7 @@ buildscript {
 
 project.ext {
     sampleVariable = "This is a sample variable"
+    retrofitVersion = '2.5.0'
 }
 
 allprojects {

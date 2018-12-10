@@ -17,6 +17,7 @@ android {
         buildConfigField "boolean", "SAMPLE_BOOLEAN", 'true'
         buildConfigField "String", "SAMPLE_STRING", '"This is a string"'
         buildConfigField "String", "SAMPLE_VARIABLE", "\"${rootProject.ext.sampleVariable}\""
+        buildConfigField "String", "CURRICULUM_SERVER", '"http://192.168.122.1:4567"'
     }
     buildTypes {
         release {
@@ -41,6 +42,9 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     implementation 'androidx.fragment:fragment-ktx:1.0.0'
+    implementation "com.squareup.retrofit2:retrofit:${rootProject.ext.retrofitVersion}"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${rootProject.ext.retrofitVersion}"
+    implementation "com.squareup.retrofit2:converter-gson:${rootProject.ext.retrofitVersion}"
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.hamcrest:hamcrest-library:1.3'

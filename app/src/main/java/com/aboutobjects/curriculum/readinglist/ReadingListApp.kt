@@ -2,6 +2,7 @@ package com.aboutobjects.curriculum.readinglist
 
 import android.app.Application
 import com.aboutobjects.curriculum.readinglist.service.BookListService
+import com.aboutobjects.curriculum.readinglist.service.CurriculumService
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 
@@ -18,5 +19,9 @@ class ReadingListApp : Application() {
 
     val bookListService: BookListService by lazy {
         BookListService(app = this)
+    }
+
+    val curriculumService: CurriculumService by lazy {
+        CurriculumService(app = this)
     }
 }
